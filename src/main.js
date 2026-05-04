@@ -8,6 +8,7 @@ import { createScene, addStaticReferenceObject } from "./scene/createScene.js";
 import { enableXRAndButton } from "./xr/enableXR.js";
 import { requestHitTestSource, updateReticleFromHitTest } from "./xr/hitTest.js";
 import { createReticle } from "./xr/reticle.js";
+import { createGroundGrid, updateGroundGridFromReticle } from "./xr/groundGrid.js";
 import {
   applyPlacementTransform,
   beginPlacementAtReticle,
@@ -28,12 +29,14 @@ import {
   updateOverlayText,
   setOverlayEnabled,
   setModeButtonText,
+  setGridButtonText,
 } from "./ui/overlay.js";
 
 const renderer = createRenderer();
 const { scene, camera } = createScene();
 const referenceCube = addStaticReferenceObject(scene);
 const reticle = createReticle(scene);
+const groundGrid = createGroundGrid(scene);
 
 enableXRAndButton(renderer);
 reticle.matrixAutoUpdate = false;
@@ -54,6 +57,7 @@ let activeTouchId = null;
 let lastPointerY = 0;
 let dragStartY = 0;
 let dragStartYaw = 0;
+let showGroundGrid = true;
 const placementState = createPlacementState();
 const DRAG_ROTATION_SENSITIVITY = 0.02; // radians per px
 
@@ -63,6 +67,7 @@ let stepModeEnabled = true;
 function refreshOverlay() {
   updateOverlayText(assemblyState, placed, isAdjustingPlacement);
   setModeButtonText(stepModeEnabled);
+  setGridButtonText(showGroundGrid);
 }
 
 function applyDisplayMode() {
@@ -117,6 +122,10 @@ initOverlay({
     if (!assemblyState || !placed) return;
     stepModeEnabled = !stepModeEnabled;
     applyDisplayMode();
+  },
+  onToggleGrid: () => {
+    showGroundGrid = !showGroundGrid;
+    refreshOverlay();
   },
 });
 
@@ -342,5 +351,7 @@ renderer.setAnimationLoop((timestamp, frame) => {
     referenceCube.rotation.x += 0.01;
     referenceCube.rotation.y += 0.01;
   }
+
+  updateGroundGridFromReticle(groundGrid, reticle, showGroundGrid);
   renderer.render(scene, camera);
 });

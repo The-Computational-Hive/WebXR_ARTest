@@ -7,18 +7,21 @@ export function initOverlay({
   onResetStep,
   onResetPlacement,
   onToggleMode,
+  onToggleGrid,
 }) {
   const nextBtn = document.getElementById("btn-next");
   const prevBtn = document.getElementById("btn-prev");
   const resetStepBtn = document.getElementById("btn-reset-step");
   const resetPlaceBtn = document.getElementById("btn-reset-placement");
   const modeBtn = document.getElementById("btn-toggle-mode");
+  const gridBtn = document.getElementById("btn-toggle-grid");
 
   if (nextBtn) nextBtn.addEventListener("click", onNext);
   if (prevBtn) prevBtn.addEventListener("click", onPrevious);
   if (resetStepBtn) resetStepBtn.addEventListener("click", onResetStep);
   if (resetPlaceBtn) resetPlaceBtn.addEventListener("click", onResetPlacement);
   if (modeBtn) modeBtn.addEventListener("click", onToggleMode);
+  if (gridBtn) gridBtn.addEventListener("click", onToggleGrid);
 }
 
 export function setOverlayEnabled(enabled) {
@@ -42,6 +45,13 @@ export function setModeButtonText(stepModeEnabled) {
   const modeBtn = document.getElementById("btn-toggle-mode");
   if (modeBtn) {
     modeBtn.textContent = stepModeEnabled ? "Show All" : "Step Mode";
+  }
+}
+
+export function setGridButtonText(enabled) {
+  const gridBtn = document.getElementById("btn-toggle-grid");
+  if (gridBtn) {
+    gridBtn.textContent = enabled ? "Grid: On" : "Grid: Off";
   }
 }
 
