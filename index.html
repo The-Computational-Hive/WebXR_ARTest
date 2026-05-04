@@ -8,8 +8,16 @@
   </head>
   <body>
     <div id="hud">
-      <h1>WebXR AR Cube Demo</h1>
-      <p>This app opens an AR session, detects real-world surfaces, and lets you tap to place 3D cubes in your space. Best on Chrome for Android over HTTPS.</p>
+      <h1>WebXR Wasp Assembly</h1>
+      <p>Enter AR, tap once to place the aggregation, then step through the assembly sequence.</p>
+      <div id="controls">
+        <button id="btn-prev" type="button">Previous</button>
+        <button id="btn-next" type="button">Next</button>
+        <button id="btn-reset-step" type="button">Reset Step</button>
+        <button id="btn-reset-placement" type="button">Reset Placement</button>
+        <button id="btn-toggle-mode" type="button">Show All</button>
+      </div>
+      <div id="step-label">Part 0 / 0</div>
     </div>
 
     <script type="module" src="./src/main.js"></script>

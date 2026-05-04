@@ -5,8 +5,16 @@ export function createReticle(scene) {
   const geometry = new THREE.RingGeometry(0.06, 0.08, 32);
   // Rotate flat in XZ plane so it lies on horizontal surfaces
   geometry.rotateX(-Math.PI / 2);
-  const material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x00ffff,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.9,
+    depthTest: false,
+    depthWrite: false,
+  });
   const reticle = new THREE.Mesh(geometry, material);
+  reticle.renderOrder = 999;
   reticle.visible = false;
   scene.add(reticle);
   return reticle;

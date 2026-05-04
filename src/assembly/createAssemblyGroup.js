@@ -6,10 +6,15 @@ export function createAssemblyGroup(aggregation) {
   const group = new THREE.Group();
   group.name = "aggregationGroup";
 
+  // Wasp/Rhino exports in Z-up space; Three.js is Y-up.
+  // Rotating -90° around X maps Rhino Z (up) → Three Y (up)
+  // and Rhino Y (forward) → Three -Z (into screen).
+  group.rotation.x = -Math.PI / 2;
+
   const partObjects = new Map();
 
-  for (const part of aggregation.parts) {
-    const mesh = createPartMesh(part);
+  for (const [index, part] of aggregation.parts.entries()) {
+    const mesh = createPartMesh(part, index);
     group.add(mesh);
     partObjects.set(part.id, mesh);
   }

@@ -45,6 +45,34 @@ body {
   line-height: 1.4;
 }
 
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+#controls button {
+  border: 1px solid #36507a;
+  border-radius: 8px;
+  background: rgba(26, 38, 56, 0.9);
+  color: #e9f0fb;
+  padding: 7px 10px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#controls button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+#step-label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #c8d7eb;
+}
+
 canvas {
   display: block;
 }

@@ -23,15 +23,30 @@ export function resetStep(state) {
   setStep(state, 0);
 }
 
+export function showAllParts(state) {
+  state.partObjects.forEach((mesh) => {
+    mesh.visible = true;
+    mesh.material.opacity = 1.0;
+    if (mesh.userData.baseColor) {
+      mesh.material.color.copy(mesh.userData.baseColor);
+    }
+  });
+}
+
 export function updatePartVisibility(state) {
   state.sequence.forEach((partId, i) => {
     const mesh = state.partObjects.get(partId);
     if (!mesh) return;
 
+    if (!mesh.userData.baseColor) {
+      mesh.userData.baseColor = mesh.material.color.clone();
+    }
+
     if (i < state.currentStep) {
       // Past part — fully visible
       mesh.visible = true;
       mesh.material.opacity = 1.0;
+      mesh.material.color.copy(mesh.userData.baseColor);
     } else if (i === state.currentStep) {
       // Current part — fully visible, highlighted
       mesh.visible = true;
@@ -44,6 +59,7 @@ export function updatePartVisibility(state) {
       } else {
         mesh.visible = true;
         mesh.material.opacity = 0.15;
+        mesh.material.color.copy(mesh.userData.baseColor);
       }
     }
   });
