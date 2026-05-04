@@ -24,7 +24,5 @@ export function updateReticleFromHitTest(frame, hitTestSource, reticle, renderer
     const pose = hit.getPose(referenceSpace);
     reticle.visible = true;
     reticle.matrix.fromArray(pose.transform.matrix);
-  } else {
-    reticle.visible = false;
   }
 }

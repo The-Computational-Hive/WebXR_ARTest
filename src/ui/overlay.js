@@ -45,13 +45,15 @@ export function setModeButtonText(stepModeEnabled) {
   }
 }
 
-export function updateOverlayText(state, placed) {
+export function updateOverlayText(state, placed, isAdjustingPlacement = false) {
   const label = document.getElementById("step-label");
   if (label) {
     if (!state || !state.sequence.length) {
       label.textContent = "Part 0 / 0";
+    } else if (isAdjustingPlacement) {
+      label.textContent = "Hold and drag up/down to rotate, then release to place";
     } else if (!placed) {
-      label.textContent = "Tap in AR to place assembly";
+      label.textContent = "Tap in AR to lock position";
     } else {
       label.textContent = `Part ${state.currentStep + 1} / ${state.sequence.length}`;
     }
